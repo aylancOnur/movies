@@ -5,10 +5,10 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 
 import {connect} from 'react-redux';
 
-import {requestMovietWithId} from '../../redux/actions';
+import {requestMovietWithId, cacheMovie} from '../../redux/actions';
 
 const mapStateToProps = state => {
-  return {app: state.app};
+  return {app: state.appReducer};
 };
 
 const mapDispatchToProps = dispatch => {
@@ -22,12 +22,23 @@ const Detail = connect(
   const {app, dispatch} = props;
   const {movieId} = props.route.params;
 
+  // console.log('MOVIE => ', app.movie);
+  // console.log('CACHED MOVIES => ', app.cacheMovies);
+
   useEffect(() => {
-    dispatch(requestMovietWithId(movieId));
+    const cachedMovie = app.cacheMovies?.find(item => item.id === movieId);
+    // console.log('CACHE MOVIE => ', cachedMovie, Boolean(cachedMovie));
+
+    if (cachedMovie === undefined) {
+      dispatch(requestMovietWithId(movieId));
+    } else {
+      return;
+      // dispatch(cacheMovie(movieId));
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [movieId]);
 
-  console.log('MOVIE DETAIL', app.movie);
+  // console.log('MOVIE DETAIL', app.movie);
   return (
     <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
       <MaterialCommunityIcons style={{marginRight: 5}} name="movie" size={30} />

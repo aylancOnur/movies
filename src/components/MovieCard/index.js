@@ -1,17 +1,34 @@
 import React, {memo} from 'react';
 import {Image, Text, TouchableOpacity, View} from 'react-native';
 
+import {connect} from 'react-redux';
+
+import {cacheMovie} from '../../redux/actions';
+
 import styles from './styles';
 
-const MovieCard = props => {
+const mapStateToProps = state => {
+  return {app: state.appReducer};
+};
+
+const mapDispatchToProps = dispatch => {
+  return {dispatch};
+};
+
+const MovieCard = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(props => {
+  const {app, dispatch} = props;
+
+  const handlePress = () => {
+    props.navigation.navigate('MovieDetail', {
+      movieId: props.movie.id,
+    });
+    // dispatch(cacheMovie(props.movie));
+  };
   return (
-    <TouchableOpacity
-      style={styles.card}
-      onPress={() =>
-        props.navigation.navigate('MovieDetail', {
-          movieId: props.movie.id,
-        })
-      }>
+    <TouchableOpacity style={styles.card} onPress={handlePress}>
       <View style={styles.imageContainer}>
         <Image
           source={{
@@ -28,6 +45,6 @@ const MovieCard = props => {
       </View>
     </TouchableOpacity>
   );
-};
+});
 
 export default memo(MovieCard);

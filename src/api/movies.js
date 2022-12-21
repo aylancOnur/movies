@@ -13,6 +13,7 @@ export const getAllMovies = async page => {
 };
 
 export const getMovieWithId = async movieId => {
+  console.log('GET MOVIE ID');
   try {
     let responseObj = await get(
       `https://api.themoviedb.org/3/movie/${movieId}?api_key=cccc1316adcdfa77492f1b11d081cd91&language=en-US`,

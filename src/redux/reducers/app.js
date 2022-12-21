@@ -3,11 +3,16 @@ import * as constants from '../constants';
 const initialState = {
   loading: false,
 
-  searchLoading: false,
+  searchLoading: true,
 
   movies: [],
 
-  searchMovies: [],
+  cacheMovies: [],
+
+  searchMovies: {
+    movies: [],
+    total_pages: null,
+  },
 
   movie: {},
 };
@@ -33,6 +38,7 @@ export const app = (state = initialState, {type, payload, key, value}) => {
       return {
         ...state,
         movie: payload,
+        cacheMovies: [...state.cacheMovies, payload],
       };
     }
 
@@ -40,12 +46,18 @@ export const app = (state = initialState, {type, payload, key, value}) => {
       if (payload.isPagination) {
         return {
           ...state,
-          searchMovies: [...state.searchMovies, ...payload.data.results],
+          searchMovies: {
+            movies: [...state.searchMovies.movies, ...payload.data.results],
+            total_pages: payload.data.total_pages,
+          },
         };
       } else {
         return {
           ...state,
-          searchMovies: payload.data.results,
+          searchMovies: {
+            movies: payload.data.results,
+            total_pages: payload.data.total_pages,
+          },
         };
       }
     }
@@ -53,7 +65,7 @@ export const app = (state = initialState, {type, payload, key, value}) => {
     case constants.REQUEST_CLEAR_SEARCH_MOVIES: {
       return {
         ...state,
-        searchMovies: [],
+        searchMovies: {movies: []},
       };
     }
 

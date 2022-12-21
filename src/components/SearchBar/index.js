@@ -1,12 +1,5 @@
-import React, {useEffect, useRef, useState} from 'react';
-import {
-  Animated,
-  Dimensions,
-  Text,
-  View,
-  TouchableOpacity,
-  Keyboard,
-} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {Animated, Text, View, TouchableOpacity} from 'react-native';
 
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
@@ -21,7 +14,7 @@ import {w} from '../../utils/ui/dimensions';
 import styles from './styles';
 
 const mapStateToProps = state => {
-  return {app: state.app};
+  return {app: state.appReducer};
 };
 
 const mapDispatchToProps = dispatch => {
@@ -43,8 +36,10 @@ const SearchBar = connect(
   const [fadeAnim, setFadeAnim] = useState(new Animated.Value(24));
 
   const handlePagination = () => {
-    setPage(page + 1);
-    setIsPagination(true);
+    if (app.searchMovies.total_pages !== page) {
+      setPage(page + 1);
+      setIsPagination(true);
+    }
   };
 
   const handleText = text => {

@@ -10,7 +10,7 @@ import {Loading, MovieCard, SearchBar} from '../../components';
 import styles from './styles';
 
 const mapStateToProps = state => {
-  return {app: state.app};
+  return {app: state.appReducer};
 };
 
 const mapDispatchToProps = dispatch => {
@@ -22,6 +22,8 @@ const Home = connect(
   mapDispatchToProps,
 )(props => {
   const {app, dispatch} = props;
+
+  // console.log('APP =>', app.cacheMovies.length);
 
   const [page, setPage] = useState(1);
 

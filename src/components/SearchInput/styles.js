@@ -4,6 +4,7 @@ const styles = StyleSheet.create({
   autoComplate: {
     backgroundColor: 'transparent',
     height: '100%',
+    flex: 1,
   },
   listContainer: {
     marginTop: 15,
@@ -26,6 +27,17 @@ const styles = StyleSheet.create({
     borderWidth: 0,
     height: 40,
     width: '100%',
+  },
+  emptyContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'blue',
+    height: 600,
+    flexGrow: 1,
+  },
+  emptyText: {
+    fontSize: 30,
   },
 });
 
