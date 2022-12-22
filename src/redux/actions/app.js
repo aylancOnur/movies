@@ -21,11 +21,17 @@ export const requestAllMovies = page => async (dispatch, getState) => {
 };
 
 export const requestMovietWithId = movieId => async (dispatch, getState) => {
-  console.log('REQUEST WITH MOVIE ID');
+  dispatch({
+    type: constants.SET_DETAIL_LOADING,
+    key: 'detailLoading',
+    value: true,
+  });
 
-  const {data, success} = await movies.getMovieWithId(movieId);
+  const {data} = await movies.getMovieWithId(movieId);
 
-  if (success) {
+  console.log('REQUEST WITH MOVIE ID', data);
+
+  if (data.success) {
     dispatch({
       type: constants.REQUEST_GET_MOVIE_WITH_ID,
       payload: data,
@@ -33,6 +39,42 @@ export const requestMovietWithId = movieId => async (dispatch, getState) => {
   } else {
     console.log('ERROR');
   }
+
+  setTimeout(() => {
+    dispatch({
+      type: constants.SET_DETAIL_LOADING,
+      key: 'detailLoading',
+      value: false,
+    });
+  }, 1000);
+};
+
+export const requestCachedMovietWithId =
+  movie => async (dispatch, getState) => {
+    dispatch({
+      type: constants.SET_DETAIL_LOADING,
+      key: 'detailLoading',
+      value: true,
+    });
+
+    dispatch({
+      type: constants.REQUEST_GET_CACHE_MOVIE_WITH_ID,
+      payload: movie,
+    });
+
+    setTimeout(() => {
+      dispatch({
+        type: constants.SET_DETAIL_LOADING,
+        key: 'detailLoading',
+        value: false,
+      });
+    }, 1000);
+  };
+
+export const clearmovieDetail = () => async (dispatch, getState) => {
+  dispatch({
+    type: constants.REQUEST_CLEAR_MOVIE_DETAIL,
+  });
 };
 
 export const requestSearchMovies =

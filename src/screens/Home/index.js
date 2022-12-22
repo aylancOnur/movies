@@ -8,6 +8,7 @@ import {requestAllMovies, pullToRefresh} from '../../redux/actions';
 import {Loading, MovieCard, SearchBar} from '../../components';
 
 import styles from './styles';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const mapStateToProps = state => {
   return {app: state.appReducer};
@@ -23,7 +24,7 @@ const Home = connect(
 )(props => {
   const {app, dispatch} = props;
 
-  // console.log('APP =>', app.cacheMovies.length);
+  console.log('APP =>', app.cacheMovies.length);
 
   const [page, setPage] = useState(1);
 
@@ -37,6 +38,7 @@ const Home = connect(
 
   useEffect(() => {
     dispatch(requestAllMovies(page));
+    // AsyncStorage.clear('root');
   }, [dispatch, page]);
 
   return (

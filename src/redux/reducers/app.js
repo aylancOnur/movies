@@ -2,8 +2,8 @@ import * as constants from '../constants';
 
 const initialState = {
   loading: false,
-
   searchLoading: true,
+  detailLoading: false,
 
   movies: [],
 
@@ -27,6 +27,10 @@ export const app = (state = initialState, {type, payload, key, value}) => {
       return {...state, [key]: value};
     }
 
+    case constants.SET_DETAIL_LOADING: {
+      return {...state, [key]: value};
+    }
+
     case constants.REQUEST_GET_ALL_MOVIES: {
       return {
         ...state,
@@ -39,6 +43,20 @@ export const app = (state = initialState, {type, payload, key, value}) => {
         ...state,
         movie: payload,
         cacheMovies: [...state.cacheMovies, payload],
+      };
+    }
+
+    case constants.REQUEST_GET_CACHE_MOVIE_WITH_ID: {
+      return {
+        ...state,
+        movie: payload,
+      };
+    }
+
+    case constants.REQUEST_CLEAR_MOVIE_DETAIL: {
+      return {
+        ...state,
+        movie: {},
       };
     }
 

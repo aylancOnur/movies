@@ -13,13 +13,19 @@ export const getAllMovies = async page => {
 };
 
 export const getMovieWithId = async movieId => {
-  console.log('GET MOVIE ID');
+  // console.log('GET MOVIE ID');
   try {
-    let responseObj = await get(
+    let movieDetail = await get(
       `https://api.themoviedb.org/3/movie/${movieId}?api_key=cccc1316adcdfa77492f1b11d081cd91&language=en-US`,
     );
 
-    return responseObj;
+    let credits = await get(
+      `https://api.themoviedb.org/3/movie/${movieId}/credits?api_key=cccc1316adcdfa77492f1b11d081cd91&language=en-US`,
+    );
+
+    const responseObj = {...movieDetail.data, ...credits};
+    // console.log('RESPONSE OBJ =>', responseObj);
+    return {data: responseObj};
   } catch (error) {
     console.log(error);
   }
