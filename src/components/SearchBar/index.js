@@ -9,7 +9,7 @@ import {connect} from 'react-redux';
 
 import {requestSearchMovies, clearSearchMovies} from '../../redux/actions';
 
-import {w} from '../../utils/ui/dimensions';
+import {width} from '../../utils/ui/dimensions';
 
 import styles from './styles';
 
@@ -50,9 +50,9 @@ const SearchBar = connect(
   const handleSelect = () => {
     setIsAnimating(true);
 
-    fadeAnim._value !== w - 24
+    fadeAnim._value !== width - 24
       ? Animated.timing(fadeAnim, {
-          toValue: w - 24,
+          toValue: width - 24,
           duration: 350,
           useNativeDriver: false,
         }).start(() => {
@@ -79,17 +79,15 @@ const SearchBar = connect(
 
   useEffect(() => {
     if (query.length >= 3) {
-      dispatch(requestSearchMovies(page, query, isPagination));
+      const request = setTimeout(() => {
+        dispatch(requestSearchMovies(page, query, isPagination));
+      }, 500);
+      return () => clearTimeout(request);
     } else {
       setPage(1);
       dispatch(clearSearchMovies());
     }
   }, [dispatch, isPagination, page, query]);
-
-  // const request = setTimeout(() => {
-  //   dispatch(requestSearchMovies(page, query));
-  // }, 500);
-  // return () => clearTimeout(request);
 
   const renderRectangle = () => {
     const customStyle = {

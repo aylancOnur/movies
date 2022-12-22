@@ -1,16 +1,17 @@
 import React, {memo} from 'react';
 import {Image, Text, TouchableOpacity, View} from 'react-native';
 
+import {noPoster} from '../../assets/images/index';
+
 import styles from './styles';
 
 const SearchItem = props => {
-  const {item, navigation, setQuery, close} = props;
+  const {item, navigation, close} = props;
 
   const handlePress = movieId => {
     navigation.navigate('MovieDetail', {
       movieId,
     });
-    // setQuery('');
     close();
   };
   return (
@@ -18,9 +19,13 @@ const SearchItem = props => {
       <View style={styles.itemContainer}>
         <Image
           style={styles.image}
-          source={{
-            uri: `https://image.tmdb.org/t/p/original/${item.poster_path}`,
-          }}
+          source={
+            item.poster_path
+              ? {
+                  uri: `https://image.tmdb.org/t/p/original/${item.poster_path}`,
+                }
+              : noPoster
+          }
         />
         <View style={styles.info}>
           <Text>{item.title}</Text>

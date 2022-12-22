@@ -1,10 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import {
-  Dimensions,
   FlatList,
   Image,
   ScrollView,
-  StyleSheet,
   Text,
   TouchableOpacity,
   View,
@@ -13,6 +11,9 @@ import {
 import {CastCard, ItemSeparator, Loading} from '../../components';
 
 import colors from '../../utils/color';
+import {height} from '../../utils/ui/dimensions';
+
+import {noCover} from '../../assets/images';
 
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
@@ -24,11 +25,7 @@ import {
   requestCachedMovietWithId,
 } from '../../redux/actions';
 
-import images from '../../assets/images';
-
-const {height, width} = Dimensions.get('screen');
-const setHeight = h => (height / 100) * h;
-const setwidth = w => (width / 100) * w;
+import styles from './styles';
 
 const mapStateToProps = state => {
   return {app: state.appReducer};
@@ -38,6 +35,8 @@ const mapDispatchToProps = dispatch => {
   return {dispatch};
 };
 
+const setHeight = h => (height / 100) * h;
+
 const Detail = connect(
   mapStateToProps,
   mapDispatchToProps,
@@ -45,18 +44,7 @@ const Detail = connect(
   const {app, dispatch} = props;
   const {movieId} = props.route.params;
 
-  const [isCached, setIsCached] = useState(false);
-
   const [isCastSelected, setIsCastSelected] = useState(true);
-  // const [cachedMovie, setCachedMovie] = useState({});
-
-  // setCachedMovie(cacheMovie);
-
-  // console.log('MOVIE =>', app.movie.title);
-  // console.log('CACHED MOVIE =>', cachedMovie);
-  // console.log('MOVIE ID =>', movieId);
-
-  // console.log('DETAIL LOADING =>', app.detailLoading);
 
   const handlePress = () => {
     props.navigation.goBack();
@@ -66,7 +54,6 @@ const Detail = connect(
   useEffect(() => {
     const cacheMovie = app.cacheMovies?.find(item => item.id === movieId);
 
-    // console.log('CACHED MOVIE =>', cacheMovie?.title);
     if (!cacheMovie) {
       dispatch(requestMovietWithId(movieId));
     } else {
@@ -74,21 +61,21 @@ const Detail = connect(
     }
   }, [app.cacheMovies, dispatch, movieId]);
 
-  // console.log('MOVIE DETAIL', app.movie);
   return app.detailLoading ? (
     <Loading />
   ) : (
     <ScrollView>
-      {/* <StatusBar style="light" /> */}
       <View style={styles.moviePosterImageContainer}>
         <Image
           style={styles.moviePosterImage}
           resizeMode="cover"
-          source={{
-            uri: `https://image.tmdb.org/t/p/original/${
-              app.movie && app.movie.backdrop_path
-            }`,
-          }}
+          source={
+            app.movie.backdrop_path
+              ? {
+                  uri: `https://image.tmdb.org/t/p/original/${app.movie.backdrop_path}`,
+                }
+              : noCover
+          }
         />
       </View>
       <View style={styles.headerContainer}>
@@ -175,142 +162,3 @@ const Detail = connect(
 });
 
 export {Detail};
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: colors.BASIC_BACKROUND,
-  },
-  moviePosterImageContainer: {
-    height: setHeight(35),
-    width: setwidth(145),
-    alignItems: 'center',
-    position: 'absolute',
-    left: setwidth((100 - 145) / 2),
-    top: 0,
-    elevation: 8,
-  },
-  moviePosterImage: {
-    resizeMode: 'contain',
-    width: setwidth(145),
-    height: setHeight(35),
-  },
-  LinearGradient: {
-    width: setwidth(100),
-    height: setHeight(6),
-    position: 'absolute',
-    top: 0,
-    elevation: 9,
-  },
-  headerContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingHorizontal: 20,
-    position: 'absolute',
-    right: 0,
-    left: 0,
-    top: 50,
-    elevation: 20,
-  },
-  headerText: {
-    color: colors.WHITE,
-    // fontFamily: fonts.BOLD,
-  },
-  playButton: {
-    position: 'absolute',
-    top: 110,
-    left: setwidth(50) - 70 / 2,
-    elevation: 10,
-  },
-  movieTitleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingHorizontal: 20,
-  },
-  movieTitle: {
-    color: colors.BLACK,
-    // fontFamily: fonts.EXTRA_BOLD,
-    fontSize: 18,
-    width: setwidth(60),
-  },
-  ratingText: {
-    marginLeft: 5,
-    color: colors.BLACK,
-    // fontFamily: fonts.EXTRA_BOLD,
-    fontSize: 15,
-  },
-  row: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  row2: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    paddingLeft: 550,
-    paddingStart: 540,
-  },
-  fav: {
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  genreText: {
-    color: colors.LIGHT_GRAY,
-    paddingHorizontal: 20,
-    paddingTop: 5,
-    // fontFamily: fonts.BOLD,
-    fontSize: 13,
-  },
-  genreText2: {
-    color: colors.DEFAULT_BLACK,
-    //paddingHorizontal:20,
-    paddingBottom: 7,
-    paddingTop: 5,
-    // fontFamily: fonts.BOLD,
-    fontSize: 16,
-    paddingVertical: 5,
-  },
-  overViewContainer: {
-    backgroundColor: colors.EXTRA_LIGHT_GRAY,
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-    marginVertical: 10,
-  },
-  overViewTitle: {
-    color: colors.BLACK,
-    // fontFamily: fonts.BOLD,
-    fontSize: 18,
-  },
-  overViewText: {
-    color: colors.LIGHT_GRAY,
-    paddingVertical: 5,
-    // fontFamily: fonts.BOLD,
-    fontSize: 13,
-    textAlign: 'justify',
-  },
-  castTitle: {
-    marginLeft: 20,
-    color: colors.BLACK,
-    // fontFamily: fonts.BOLD,
-    fontSize: 18,
-  },
-  castSubMenuContainer: {
-    marginLeft: 20,
-    flexDirection: 'row',
-    marginVertical: 5,
-  },
-  castSubMenuText: {
-    marginRight: 10,
-    color: colors.BLACK,
-    // fontFamily: fonts.BOLD,
-    fontSize: 13,
-  },
-  extraListTitle: {
-    marginLeft: 20,
-    color: colors.BLACK,
-    // fontFamily: fonts.BOLD,
-    fontSize: 18,
-    marginVertical: 8,
-  },
-});
