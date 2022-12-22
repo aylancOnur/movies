@@ -161,7 +161,11 @@ const Detail = connect(
             <CastCard
               originalName={item?.name}
               characterName={isCastSelected ? item?.character : item?.job}
-              image={item?.profile_path}
+              image={
+                item?.profile_path
+                  ? `https://image.tmdb.org/t/p/original/${item?.profile_path}`
+                  : null
+              }
             />
           )}
         />
