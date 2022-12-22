@@ -1,14 +1,21 @@
-import React, {useEffect, useState} from 'react';
-import {FlatList, View, RefreshControl, Platform} from 'react-native';
+import React, {useEffect, useRef, useState} from 'react';
+import {
+  FlatList,
+  View,
+  RefreshControl,
+  Platform,
+  TouchableOpacity,
+} from 'react-native';
 
 import {connect} from 'react-redux';
 
 import {requestAllMovies, pullToRefresh} from '../../redux/actions';
 
-import {Loading, MovieCard, SearchBar} from '../../components';
+import {Loading, MovieCard, SearchBar, LastViewed} from '../../components';
+
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import styles from './styles';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const mapStateToProps = state => {
   return {app: state.appReducer};
@@ -26,7 +33,11 @@ const Home = connect(
 
   console.log('APP =>', app.cacheMovies.length);
 
+  const [firstLoading, setFirstLoading] = useState(true);
+
   const [page, setPage] = useState(1);
+
+  const flatListRef = useRef();
 
   const handlePagination = () => {
     setPage(page + 1);
@@ -38,17 +49,32 @@ const Home = connect(
 
   useEffect(() => {
     dispatch(requestAllMovies(page));
-    // AsyncStorage.clear('root');
   }, [dispatch, page]);
 
-  return (
+  setTimeout(() => {
+    setFirstLoading(false);
+  }, 1000);
+
+  const backToTop = () => {
+    flatListRef.current.scrollToOffset({animated: true, offset: 0});
+  };
+
+  return firstLoading ? (
+    <Loading />
+  ) : (
     <>
       <View style={Platform.OS === 'ios' ? styles.searchContainer : null}>
         <SearchBar navigation={props.navigation} />
       </View>
+
       <View style={styles.container}>
+        {app.cacheMovies.length > 0 ? (
+          <LastViewed navigation={props.navigation} />
+        ) : null}
+
         <FlatList
           data={app.movies}
+          ref={flatListRef}
           renderItem={({item}) => {
             return <MovieCard movie={item} navigation={props.navigation} />;
           }}
@@ -59,10 +85,17 @@ const Home = connect(
             <RefreshControl refreshing={app.loading} onRefresh={onRefresh} />
           }
           scrollEnabled={app.loading ? false : true}
-          ListFooterComponent={() => <Loading />}
+          ListFooterComponent={() => (
+            <View style={styles.loadingContainer}>
+              <Loading />
+            </View>
+          )}
           initialNumToRender={20}
         />
       </View>
+      <TouchableOpacity onPress={backToTop} style={styles.scrollToTop}>
+        <MaterialCommunityIcons name="chevron-up" color="white" size={40} />
+      </TouchableOpacity>
     </>
   );
 });

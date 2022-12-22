@@ -5,6 +5,7 @@ import {Loading} from './Loading';
 import SearchItem from './SearchItem';
 import {ItemSeparator} from './ItemSeperator';
 import {CastCard} from './CastCard';
+import {LastViewed} from './LastViewed';
 
 export {MovieCard};
 export {SearchBar};
@@ -13,3 +14,4 @@ export {Loading};
 export {SearchItem};
 export {ItemSeparator};
 export {CastCard};
+export {LastViewed};

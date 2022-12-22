@@ -1,5 +1,6 @@
 import {StyleSheet} from 'react-native';
 import {W} from '../../utils/ui/dimensions';
+import colors from '../../utils/color';
 
 const styles = StyleSheet.create({
   container: {
@@ -8,6 +9,16 @@ const styles = StyleSheet.create({
   },
   searchContainer: {
     zIndex: 9,
+  },
+  loadingContainer: {
+    height: 50,
+  },
+  scrollToTop: {
+    position: 'absolute',
+    bottom: '5%',
+    right: '5%',
+    backgroundColor: colors.ACTIVE,
+    borderRadius: 100,
   },
 });
 

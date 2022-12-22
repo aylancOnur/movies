@@ -12,13 +12,6 @@ import styles from './styles';
 
 const App = () => {
   return (
-    // <View style={styles.container}>
-    //   <Provider store={store}>
-    //     <PersistGate persistor={persistStore(store)}>
-    //       <Navigation />
-    //     </PersistGate>
-    //   </Provider>
-    // </View>
     <View style={styles.container}>
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>

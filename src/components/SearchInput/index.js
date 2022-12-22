@@ -1,5 +1,5 @@
-import React, {useRef} from 'react';
-import {Text, View} from 'react-native';
+import React from 'react';
+import {Text, TextInput, View} from 'react-native';
 
 import {SearchItem} from '../index';
 
@@ -20,31 +20,32 @@ const SearchInput = props => {
     close,
   } = props;
 
-  const inputRef = useRef();
-
-  setTimeout(() => inputRef.current.focus(), 150);
-
   const EmptyComponent = ({title}) => (
     <View style={styles.emptyContainer}>
-      <Text style={styles.emptyText}>{title}</Text>
+      <Text style={styles.emptyText}>Nothing here...</Text>
     </View>
   );
+
+  const Footer = () => {
+    return (
+      <View style={styles.headerStyle}>
+        <Loading />
+      </View>
+    );
+  };
 
   return (
     <Autocomplete
       style={styles.autoComplate}
       data={searchMovies.movies.length > 0 ? searchMovies.movies : []}
-      ListEmptyComponent={
-        <EmptyComponent title="Nothing here, come back later.." />
-      }
+      ListEmptyComponent={<EmptyComponent />}
       placeholder={'Search a Movie'}
       autoFocus={true}
       inputContainerStyle={styles.inputContainer}
       listContainerStyle={styles.listContainer}
-      ref={inputRef}
-      onChangeText={text => {
-        handleText(text);
-      }}
+      renderTextInput={() => (
+        <TextInput autoFocus={true} onChangeText={handleText} />
+      )}
       flatListProps={{
         onEndReached: handlePagination,
         keyExtractor: (_, idx) => idx,
@@ -57,12 +58,9 @@ const SearchInput = props => {
             close={close}
           />
         ),
-
-        ListHeaderComponent: searchLoading ? <Loading /> : null,
-        ListFooterComponent: searchLoading ? <Loading /> : null,
-        ListEmptyComponent: (
-          <EmptyComponent title="Nothing here, come back later.." />
-        ),
+        ListHeaderComponent: searchLoading ? Loading : null,
+        ListFooterComponent: searchLoading ? Footer : null,
+        ListEmptyComponent: EmptyComponent,
         initialNumToRender: 20,
       }}
     />

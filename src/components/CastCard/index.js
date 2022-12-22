@@ -1,11 +1,9 @@
 import React from 'react';
-import {View, StyleSheet, Text, Image} from 'react-native';
+import {View, Text, Image} from 'react-native';
 
-import colors from '../../utils/color';
-// import fonts from '../constants/fonts';
 import {noImage} from '../../assets/images';
 
-// import {getPoster} from '../../services/MovieService';
+import styles from './styles';
 
 const CastCard = ({originalName, image, characterName}) => {
   return (
@@ -26,26 +24,3 @@ const CastCard = ({originalName, image, characterName}) => {
 };
 
 export {CastCard};
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  image: {
-    height: 120,
-    width: 80,
-    borderRadius: 10,
-  },
-  originalName: {
-    width: 80,
-    color: colors.BLACK,
-    // fontFamily: fonts.BOLD,
-    fontSize: 12,
-  },
-  characterName: {
-    width: 80,
-    color: colors.LIGHT_GRAY,
-    // fontFamily: fonts.BOLD,
-    fontSize: 12,
-  },
-});

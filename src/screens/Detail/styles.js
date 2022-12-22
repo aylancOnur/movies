@@ -39,12 +39,15 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: 0,
     left: 0,
-    top: 50,
+    top: 30,
     elevation: 20,
+  },
+  backButton: {
+    backgroundColor: colors.LIGHT_GRAY,
+    borderRadius: 100,
   },
   headerText: {
     color: colors.WHITE,
-    // fontFamily: fonts.BOLD,
   },
   playButton: {
     position: 'absolute',
@@ -60,14 +63,12 @@ const styles = StyleSheet.create({
   },
   movieTitle: {
     color: colors.BLACK,
-    // fontFamily: fonts.EXTRA_BOLD,
     fontSize: 18,
     width: setwidth(60),
   },
   ratingText: {
     marginLeft: 5,
     color: colors.BLACK,
-    // fontFamily: fonts.EXTRA_BOLD,
     fontSize: 15,
   },
   row: {
@@ -88,15 +89,12 @@ const styles = StyleSheet.create({
     color: colors.LIGHT_GRAY,
     paddingHorizontal: 20,
     paddingTop: 5,
-    // fontFamily: fonts.BOLD,
     fontSize: 13,
   },
   genreText2: {
     color: colors.DEFAULT_BLACK,
-    //paddingHorizontal:20,
     paddingBottom: 7,
     paddingTop: 5,
-    // fontFamily: fonts.BOLD,
     fontSize: 16,
     paddingVertical: 5,
   },
@@ -108,20 +106,17 @@ const styles = StyleSheet.create({
   },
   overViewTitle: {
     color: colors.BLACK,
-    // fontFamily: fonts.BOLD,
     fontSize: 18,
   },
   overViewText: {
     color: colors.LIGHT_GRAY,
     paddingVertical: 5,
-    // fontFamily: fonts.BOLD,
     fontSize: 13,
     textAlign: 'justify',
   },
   castTitle: {
     marginLeft: 20,
     color: colors.BLACK,
-    // fontFamily: fonts.BOLD,
     fontSize: 18,
   },
   castSubMenuContainer: {
@@ -132,13 +127,11 @@ const styles = StyleSheet.create({
   castSubMenuText: {
     marginRight: 10,
     color: colors.BLACK,
-    // fontFamily: fonts.BOLD,
     fontSize: 13,
   },
   extraListTitle: {
     marginLeft: 20,
     color: colors.BLACK,
-    // fontFamily: fonts.BOLD,
     fontSize: 18,
     marginVertical: 8,
   },

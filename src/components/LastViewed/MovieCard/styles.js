@@ -1,25 +1,24 @@
 import {StyleSheet} from 'react-native';
-import Colors from '../../utils/color';
-import {W} from '../../utils/ui/dimensions';
+import Colors from '../../../utils/color';
+import {W, H} from '../../../utils/ui/dimensions';
 
 const styles = StyleSheet.create({
   card: {
-    width: W(46),
-    margin: W(1),
+    width: W(20),
     marginBottom: W(5),
     backgroundColor: '#F0F0F3',
     borderRadius: 10,
   },
   imageContainer: {
     width: '100%',
-    height: 200,
+    height: '100%',
     marginBottom: 8,
   },
   image: {
     width: '100%',
     height: '100%',
     resizeMode: 'cover',
-    borderRadius: 2,
+    borderRadius: 10,
     zIndex: 0,
   },
   productName: {

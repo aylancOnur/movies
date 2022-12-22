@@ -2,8 +2,6 @@ import * as constants from '../constants';
 
 import * as movies from '../../api/movies';
 
-import AsyncStorage from '@react-native-async-storage/async-storage';
-
 export const requestAllMovies = page => async (dispatch, getState) => {
   dispatch({type: constants.SET_LOADING, key: 'loading', value: true});
 
@@ -17,7 +15,9 @@ export const requestAllMovies = page => async (dispatch, getState) => {
   } else {
   }
 
-  dispatch({type: constants.SET_LOADING, key: 'loading', value: false});
+  setTimeout(() => {
+    dispatch({type: constants.SET_LOADING, key: 'loading', value: false});
+  }, 500);
 };
 
 export const requestMovietWithId = movieId => async (dispatch, getState) => {
@@ -28,8 +28,6 @@ export const requestMovietWithId = movieId => async (dispatch, getState) => {
   });
 
   const {data} = await movies.getMovieWithId(movieId);
-
-  console.log('REQUEST WITH MOVIE ID', data);
 
   if (data.success) {
     dispatch({
@@ -86,14 +84,6 @@ export const requestSearchMovies =
     });
 
     const {data, success} = await movies.getSearchMovies(page, query);
-
-    // if (data.total_pages === page) {
-    //   dispatch({
-    //     type: constants.SET_SEARCH_LOADING,
-    //     key: 'searchLoading',
-    //     value: false,
-    //   });
-    // }
 
     if (success) {
       dispatch({

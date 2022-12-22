@@ -1,13 +1,16 @@
-import {Platform, StyleSheet} from 'react-native';
-import {getStatusBarHeight} from '../../utils/ui/getStatusBarHeight';
+import {StyleSheet} from 'react-native';
+import colors from '../../utils/color';
 
 const styles = StyleSheet.create({
   header: {
     width: '100%',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    paddingHorizontal: 20,
+    paddingHorizontal: 10,
+    paddingVertical: 5,
     zIndex: 3,
+    borderBottomWidth: 0.5,
+    borderBottomColor: colors.LIGHT_GRAY,
   },
   searchContainer: {
     flexWrap: 'wrap',

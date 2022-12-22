@@ -79,7 +79,10 @@ const Detail = connect(
         />
       </View>
       <View style={styles.headerContainer}>
-        <TouchableOpacity activeOpacity={0.5} onPress={handlePress}>
+        <TouchableOpacity
+          style={styles.backButton}
+          activeOpacity={0.5}
+          onPress={handlePress}>
           <MaterialCommunityIcons
             name="chevron-left"
             size={35}
